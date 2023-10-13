@@ -25,6 +25,9 @@ const toggleStar = () => {
 
 const togglePasswordVisibility = () => {
     console.log('toggled')
+    if (process.env.DEV) {
+        console.log('I\'m on a development build')
+    }
     console.log(process.env.VITE_SUPABASE_URL)
     console.log(showPassword.value)
     showPassword.value = !showPassword.value

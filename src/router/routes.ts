@@ -3,11 +3,13 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    name: 'home',
+    component: () => import('layouts/QanopeeLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
   {
     path: '/connexion',
+    name: 'connexion',
     component: () => import('pages/ConnexionPage.vue')
   },
   {

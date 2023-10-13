@@ -17,10 +17,10 @@
 
                 <div class="qanopee-form-row">
                     <q-input v-model="password" label="Mot de passe" hint="Mot de passe"
-                        :type="showPassword ? 'password' : 'text'" lazy-rules
+                        :type="showPassword ? 'text' : 'password'" lazy-rules
                         :rules="[val => val && val.length > 0 || 'Please type something']">
                         <template v-slot:append>
-                            <q-icon :name="showPassword ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                            <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
                                 @click="showPassword = !showPassword" />
                         </template>
                     </q-input>
@@ -40,24 +40,32 @@
 
 <script lang="ts" setup>
 import { useQuasar } from 'quasar'
-import { defineProps, computed, ref, watch, onMounted, onUnmounted, Ref, reactive } from 'vue'
+import { useAuthStore } from 'src/stores/auth';
+import { computed, ref, Ref } from 'vue'
+import { useRouter } from 'vue-router';
 
+
+// Vous pouvez maintenant utiliser useAuthStore dans votre composant
+const authStore = useAuthStore();
+const router = useRouter();
 const $q = useQuasar()
 
 const email: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 const showPassword: Ref<boolean> = ref(false)
-const isPwd: Ref<boolean> = ref(true)
+
 
 const emailRules = computed(() => [
     (v: string) => !!v || 'Le champ email est requis',
     (v: string) => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(v) || "L'adresse email n'est pas valide",
 ])
 
-const onSubmit = () => {
-    console.log(email.value)
-    console.log(password.value)
+const onSubmit = async () => {
 
+    await authStore.login(email.value, password.value);
+    router.push({
+        name: 'home'
+    })
     return true
 }
 
@@ -96,16 +104,6 @@ h1 {
 h2 {
     padding-left: 10px;
     padding-right: 10px;
-}
-
-
-
-.row-right {
-    justify-content: flex-end;
-}
-
-.row-left {
-    justify-content: flex-start;
 }
 
 .flex-container {
