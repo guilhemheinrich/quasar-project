@@ -3,56 +3,52 @@
 
         <q-drawer side="left" behavior="desktop" v-model="drawer" show-if-above :mini="drawerMini"
             @mouseover="drawerMini = false" @mouseout="drawerMini = true" mini-to-overlay :width="300" :breakpoint="500"
-            bordered>
-            <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-                <q-list padding>
-                    <q-item active clickable v-ripple>
-                        <q-item-section avatar>
-                            <q-icon name="inbox" />
-                        </q-item-section>
+            bordered class="column flex-center">
 
-                        <q-item-section>
-                            Inbox
-                        </q-item-section>
+            <q-list padding class="self-center">
+                <q-item active clickable v-ripple>
+                    <q-item-section avatar>
+                        <q-icon name="home" />
+                    </q-item-section>
 
-                        <q-item-section>
-                            plop
-                        </q-item-section>
-                    </q-item>
+                    <q-item-section>
+                        Acceuil
+                    </q-item-section>
+                </q-item>
 
-                    <q-item active clickable v-ripple>
-                        <q-item-section avatar>
-                            <q-icon name="star" />
-                        </q-item-section>
+                <q-item active clickable v-ripple>
+                    <q-item-section avatar>
+                        <q-icon name="event" />
+                    </q-item-section>
 
-                        <q-item-section>
-                            Star
-                        </q-item-section>
-                    </q-item>
+                    <q-item-section>
+                        Mes rendez-vous
+                    </q-item-section>
+                </q-item>
 
-                    <q-item clickable v-ripple>
-                        <q-item-section avatar>
-                            <q-icon name="send" />
-                        </q-item-section>
+                <q-item clickable v-ripple>
+                    <q-item-section avatar>
+                        <q-icon name="leaderboard" />
+                    </q-item-section>
 
-                        <q-item-section>
-                            Send
-                        </q-item-section>
-                    </q-item>
+                    <q-item-section>
+                        Mes dioagnostics
+                    </q-item-section>
+                </q-item>
 
-                    <q-separator />
+                <q-separator />
 
-                    <q-item clickable v-ripple>
-                        <q-item-section avatar>
-                            <q-icon name="drafts" />
-                        </q-item-section>
+                <q-item clickable v-ripple>
+                    <q-item-section avatar>
+                        <q-icon name="drafts" />
+                    </q-item-section>
 
-                        <q-item-section>
-                            Drafts
-                        </q-item-section>
-                    </q-item>
-                </q-list>
-            </q-scroll-area>
+                    <q-item-section>
+                        Drafts
+                    </q-item-section>
+                </q-item>
+            </q-list>
+
             <!-- drawer content -->
         </q-drawer>
 
