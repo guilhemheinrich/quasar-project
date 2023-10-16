@@ -3,51 +3,62 @@
 
         <q-drawer side="left" behavior="desktop" v-model="drawer" show-if-above :mini="drawerMini"
             @mouseover="drawerMini = false" @mouseout="drawerMini = true" mini-to-overlay :width="300" :breakpoint="500"
-            :mini-width="150" bordered class="column flex-center">
+            bordered>
 
-            <q-list padding class="self-center">
-                <q-item active clickable v-ripple>
-                    <q-item-section avatar>
-                        <q-icon name="home" />
-                    </q-item-section>
+            <div class="column v-container">
 
-                    <q-item-section>
-                        Acceuil
-                    </q-item-section>
-                </q-item>
+                <div class="col-3">
+                    Hello {{ authStore.first_name }}
+                </div>
 
-                <q-item active clickable v-ripple>
-                    <q-item-section avatar>
-                        <q-icon name="event" />
-                    </q-item-section>
+                <div class="col-9">
 
-                    <q-item-section>
-                        Mes rendez-vous
-                    </q-item-section>
-                </q-item>
+                    <q-list padding>
 
-                <q-item clickable v-ripple>
-                    <q-item-section avatar>
-                        <q-icon name="leaderboard" />
-                    </q-item-section>
+                        <q-item active clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="home" />
+                            </q-item-section>
 
-                    <q-item-section>
-                        Mes dioagnostics
-                    </q-item-section>
-                </q-item>
+                            <q-item-section>
+                                Acceuil
+                            </q-item-section>
+                        </q-item>
 
-                <q-separator />
+                        <q-item active clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="event" />
+                            </q-item-section>
 
-                <q-item clickable v-ripple>
-                    <q-item-section avatar>
-                        <q-icon name="drafts" />
-                    </q-item-section>
+                            <q-item-section>
+                                Mes rendez-vous
+                            </q-item-section>
+                        </q-item>
 
-                    <q-item-section>
-                        Drafts
-                    </q-item-section>
-                </q-item>
-            </q-list>
+                        <q-item clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="leaderboard" />
+                            </q-item-section>
+
+                            <q-item-section>
+                                Mes dioagnostics
+                            </q-item-section>
+                        </q-item>
+
+                        <q-separator />
+
+                        <q-item clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="drafts" />
+                            </q-item-section>
+
+                            <q-item-section>
+                                Drafts
+                            </q-item-section>
+                        </q-item>
+                    </q-list>
+                </div>
+            </div>
 
             <!-- drawer content -->
         </q-drawer>
@@ -72,9 +83,17 @@
   
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useAuthStore } from 'src/stores/auth';
+
+const authStore = useAuthStore();
+
 
 const drawer = ref(false)
 const drawerMini = ref(true);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-container {
+    height: 100%;
+}
+</style>

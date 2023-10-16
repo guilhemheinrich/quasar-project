@@ -13,6 +13,7 @@ export const useAuthStore = defineStore({
     state: () => ({
         user: null as null | User, // Stockez ici les informations de l'utilisateur
         session: null as null | Session, // Stockez ici le jeton d'authentification
+        first_name: null as null | string
     }),
 
     getters: {
@@ -38,6 +39,12 @@ export const useAuthStore = defineStore({
                 if (user && user.id) {
                     this.user = user;
                     this.session = session
+
+                    const { data, error } = await supabase.from('users').select('*').filter('id', 'eq', this.user.id).single();
+                    if (data.first_name) {
+
+                        this.first_name = data.first_name
+                    }
                 }
                 return true
             } catch (error) {
