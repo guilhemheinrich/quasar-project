@@ -26,7 +26,7 @@ $color-white-20: rgba(255, 255, 255, 0.2);
   font-weight: 400;
   font-style: normal;
   line-height: 48px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   text-decoration: none;
   text-transform: none;
 }
@@ -126,4 +126,32 @@ h4 {
   padding-top: 3vh;
   padding-bottom: 3vh;
   @include text-style-body-16;
+}
+
+.qanopee-text-large {
+  @include text-style-body-16;
+}
+
+.qanopee-text-medium {
+  @include text-style-body-14;
+}
+
+.qanopee-text-small {
+  @include text-style-body-12;
+}
+
+.qa-radius {
+  border-radius: 16px;
+}
+
+.qa-radius-large {
+  border-radius: 32px;
+}
+
+.qanopee-button {
+  fill: $color-red-primary;
+}
+
+.underline {
+  text-decoration: underline;
 }

@@ -3,7 +3,7 @@
 
         <q-drawer side="left" behavior="desktop" v-model="drawer" show-if-above :mini="drawerMini"
             @mouseover="drawerMini = false" @mouseout="drawerMini = true" mini-to-overlay :width="300" :breakpoint="500"
-            bordered class="column flex-center">
+            :mini-width="150" bordered class="column flex-center">
 
             <q-list padding class="self-center">
                 <q-item active clickable v-ripple>
@@ -77,8 +77,4 @@ const drawer = ref(false)
 const drawerMini = ref(true);
 </script>
 
-<style scoped lang="scss">
-q-drawer {
-    fill-opacity: 0.1;
-}
-</style>
+<style scoped lang="scss"></style>

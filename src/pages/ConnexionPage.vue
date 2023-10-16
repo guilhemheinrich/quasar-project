@@ -11,11 +11,11 @@
 
 
             <q-form @submit="onSubmit" class="form-container">
-                <q-input class="qanopee-form-row" v-model="email" label="Email" hint="Votre email" type="email" lazy-rules
+                <q-input class="qanopee-text-large" v-model="email" label="Email" hint="Votre email" type="email" lazy-rules
                     :rules="emailRules" />
 
 
-                <div class="qanopee-form-row">
+                <div class="qanopee-text-large">
                     <q-input v-model="password" label="Mot de passe" hint="Mot de passe"
                         :type="showPassword ? 'text' : 'password'" lazy-rules
                         :rules="[val => val && val.length > 0 || 'Please type something']">
@@ -27,7 +27,7 @@
                 </div>
 
 
-                <div class="flex-container qanopee-form-row" style="justify-content: center">
+                <div class="flex-container qanopee-text-large" style="justify-content: center">
                     <q-btn label="Se connecter" type="submit" color="primary" class="qanopee-button" />
                 </div>
             </q-form>

@@ -43,7 +43,7 @@ body {
   color: var(--color-text);
   background: url('../assets/bckg.png') no-repeat;
   background-size: contain;
-  background-color: white;
+  background-color: #f1f4f8;
   background-position: bottom;
   background-attachment: fixed;
   transition: color 0.5s, background-color 0.5s;
@@ -55,34 +55,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-h1 {
-  @include text-style-h-1;
-  color: $color-blue-primary;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  @include text-style-h-2;
-  color: $color-blue-medium;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-h3 {
-  @include text-style-h-3;
-}
-
-h4 {
-  @include text-style-h-4;
-}
-
-.qanopee-button {
-  fill: $color-red-primary;
-}
-
-.underline {
-  text-decoration: underline;
 }

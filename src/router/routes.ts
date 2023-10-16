@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'home',
     component: () => import('layouts/QanopeeLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [{ path: '', component: () => import('pages/SearchPractitionerPage.vue') }],
   },
   {
     path: '/connexion',
@@ -15,6 +15,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/debug',
     component: () => import('pages/DebugPage.vue')
+  },
+  {
+    path: '/practitioner',
+    component: () => import('pages/SearchPractitionerPage.vue')
   },
   // Always leave this as last one,
   // but you can also remove it
