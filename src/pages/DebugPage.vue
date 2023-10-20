@@ -10,12 +10,14 @@
                     @click="togglePasswordVisibility" />
             </template>
         </q-input>
+
+        <PlaceSearchField></PlaceSearchField>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { defineProps, computed, ref, watch, onMounted, onUnmounted, Ref, reactive } from 'vue'
-
+import PlaceSearchField from 'src/components/PlaceSearchField.vue';
 const isStarred = ref(false);
 const password: Ref<string> = ref('')
 const showPassword: Ref<boolean> = ref(false)
