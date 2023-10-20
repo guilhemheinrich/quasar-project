@@ -11,6 +11,8 @@
             </template>
         </q-input>
 
+        <q-btn label="Get geolocalisation" type="button" color="primary" class="qanopee-button" @click="getPosition" />
+
         <PlaceSearchField></PlaceSearchField>
     </div>
 </template>
@@ -18,6 +20,31 @@
 <script lang="ts" setup>
 import { defineProps, computed, ref, watch, onMounted, onUnmounted, Ref, reactive } from 'vue'
 import PlaceSearchField from 'src/components/PlaceSearchField.vue';
+
+const getPosition = () => {
+
+    // Vérifie si la géolocalisation est disponible dans le navigateur
+    if ('geolocation' in navigator) {
+        // Obtenez la géolocalisation de l'utilisateur
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            console.log('Latitude : ' + latitude);
+            console.log('Longitude : ' + longitude);
+
+            // Vous pouvez maintenant utiliser les données de géolocalisation comme vous le souhaitez.
+        }, function (error) {
+            // En cas d'erreur, par exemple si l'utilisateur refuse la géolocalisation, vous pouvez gérer l'erreur ici.
+            console.error('Erreur de géolocalisation : ' + error.message);
+        });
+    } else {
+        // La géolocalisation n'est pas prise en charge dans ce navigateur.
+        console.error("La géolocalisation n'est pas disponible dans ce navigateur.");
+    }
+}
+
+
 const isStarred = ref(false);
 const password: Ref<string> = ref('')
 const showPassword: Ref<boolean> = ref(false)

@@ -1,3 +1,5 @@
+// From https://www.youtube.com/watch?v=Td9SIJdR4Uo&t=229s
+
 export default function (link: string): Promise<void> {
     return new Promise((resolve, reject) => {
         let googleScript: HTMLScriptElement | null = document.querySelector(`script[src="${link}"]`);
