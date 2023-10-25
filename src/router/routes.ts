@@ -13,6 +13,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/ConnexionPage.vue')
   },
   {
+    path: '/google',
+    name: 'google',
+    component: () => import('pages/OAuthPage.vue')
+  },
+  {
     path: '/debug',
     component: () => import('pages/DebugPage.vue')
   },
