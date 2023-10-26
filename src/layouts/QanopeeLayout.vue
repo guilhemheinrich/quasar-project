@@ -47,7 +47,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple @click="console.log('pip')">
+            <q-item clickable v-ripple @click="redirectToOAuthPage()">
               <q-item-section avatar>
                 <q-icon name="drafts" />
               </q-item-section>
@@ -84,13 +84,19 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuthStore } from 'src/stores/auth';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
+const router = useRouter();
 const drawer = ref(false)
 const drawerMini = ref(true);
 
 // Google OAuth
-
+const redirectToOAuthPage = () => {
+  router.push({
+    name: 'google'
+  })
+}
 </script>
 
 <style scoped lang="scss">

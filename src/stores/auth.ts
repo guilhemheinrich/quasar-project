@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia';
 import { createClient, User, Session } from '@supabase/supabase-js'
 
-console.log('process.env.GOOGLE_WEB_client_id')
-console.log(process.env.GOOGLE_WEB_client_id)
-console.log('process.env.VITE_SUPABASE_URL')
-console.log(process.env.VITE_SUPABASE_URL)
-
 // Créez une instance Supabase en utilisant les variables d'environnement
 const supabase = createClient(
   <string>process.env.VITE_SUPABASE_URL,
@@ -15,8 +10,8 @@ const supabase = createClient(
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    user: null as null | User, // Stockez ici les informations de l'utilisateur
-    session: null as null | Session, // Stockez ici le jeton d'authentification
+    user: null as null | User, // Stockez ici les informations de l'utilisateur supabase
+    session: null as null | Session, // Stockez ici le jeton d'authentification supabase
     first_name: null as null | string
   }),
 
@@ -25,7 +20,7 @@ export const useAuthStore = defineStore({
   },
 
   actions: {
-    async login(email: string, password: string) {
+    async loginWithPassword(email: string, password: string) {
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: email,
@@ -50,6 +45,30 @@ export const useAuthStore = defineStore({
             this.first_name = data.first_name
           }
         }
+        return true
+      } catch (error) {
+        console.error('Erreur inattendue:', error);
+      }
+    },
+
+    async loginWithGoogle() {
+      try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'consent',
+            },
+          },
+        })
+
+        if (error) {
+          // Gérer l'erreur d'authentification
+          console.error('Erreur d\'authentification:', error);
+          return;
+        }
+
         return true
       } catch (error) {
         console.error('Erreur inattendue:', error);

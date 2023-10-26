@@ -18,6 +18,16 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/OAuthPage.vue')
   },
   {
+    path: '/google-callback',
+    name: 'google-callback',
+    component: () => import('pages/AuthenticationPage.vue')
+  },
+  {
+    path: '/gauth-redirect',
+    name: 'gauth-redirect',
+    component: () => import('pages/AuthenticationPage.vue')
+  },
+  {
     path: '/debug',
     component: () => import('pages/DebugPage.vue')
   },

@@ -1,21 +1,9 @@
 <template>
-  <div class="container">
-    <div class="connexion">
-      <div id="connexion-container row">
-        <h1>Se connecter</h1>
-      </div>
-      <q-form @submit="onSubmit" class="form-container">
-        <q-input class="qanopee-text-large" v-model="email" label="Email" hint="Votre email" type="email" lazy-rules
-          :rules="emailRules" />
+  <div class="flex column">
 
-
-        <div class="flex-container qanopee-text-large" style="justify-content: center">
-          <q-btn label="Se connecter" type="submit" color="primary" class="qanopee-button" />
-        </div>
-      </q-form>
-    </div>
-
-    <q-btn label="Try me" type="button" color="primary" class="qanopee-button" @click="getAuthenticatedClient()" />
+    <q-btn label="Url mode" type="button" color="primary" class="qanopee-button" @click="getAuthenticatedClientURL()" />
+    <q-btn label="Popup mode" type="button" color="primary" class="qanopee-button"
+      @click="getAuthenticatedClientPopup()" />
   </div>
 </template>
 
@@ -26,7 +14,7 @@ import { useAuthStore } from 'src/stores/auth';
 import { computed, ref, Ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { OAuth2Client } from 'google-auth-library'
-
+import { createClient } from '@supabase/supabase-js'
 
 // Vous pouvez maintenant utiliser useAuthStore dans votre composant
 const authStore = useAuthStore();
@@ -38,39 +26,55 @@ const password: Ref<string> = ref('')
 
 const authEndpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 const clientId = <string>process.env.GOOGLE_WEB_client_id;
-const redirectUri = 'http://localhost:9000';
-const scope = 'https://www.googleapis.com/auth/userinfo.profile';
-const responseType = 'code';
+const clientSecret = <string>process.env.GOOGLE_WEB_client_secret;
+// const redirectUri = 'http://localhost:9000';
+const redirectUri = 'http://localhost:9000/gauth-redirect';
 
-const emailRules = computed(() => [
-  (v: string) => !!v || 'Le champ email est requis',
-  (v: string) => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(v) || "L'adresse email n'est pas valide",
-])
+const scope = 'https://www.googleapis.com/auth/userinfo.profile';
+const responseType = 'token';
+
+const supabase = createClient(
+  <string>process.env.VITE_SUPABASE_URL,
+  <string>process.env.VITE_SUPABASE_ANON_KEY
+)
 
 
 /**
 * Create a new OAuth2Client, and go through the OAuth2 content
 * workflow.  Return the full client to the callback.
 */
-const getAuthenticatedClient = () => {
-  console.log('plop')
-
-
+const getAuthenticatedClientURL = () => {
   // Construisez l'URL d'autorisation OAuth2
   const authorizationUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`;
-  console.log(authorizationUrl)
   // Redirigez l'utilisateur vers l'URL d'autorisation
   window.location.href = authorizationUrl;
 
 }
 
-const onSubmit = async () => {
-
-  await authStore.login(email.value, password.value);
-  router.push({
-    name: 'home'
+const getAuthenticatedClientPopup = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      },
+      redirectTo: 'http://localhost:9000/google-callback'
+    },
   })
-  return true
+
+  if (error) return
+
+  // // CLeaner way
+  // const authenticator = new OAuth2Client({
+  //   clientId: clientId,
+  //   clientSecret: clientSecret,
+  //   // redirectUri: redirectUri
+  //   credentials: {
+  //     scope: 'https://www.googleapis.com/auth/calendar.readonly',
+  //   }
+  // })
+
 }
 
 
