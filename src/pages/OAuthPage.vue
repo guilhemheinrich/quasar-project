@@ -59,7 +59,8 @@ const getAuthenticatedClientPopup = async () => {
         access_type: 'offline',
         prompt: 'consent',
       },
-      redirectTo: 'http://localhost:9000/google-callback'
+      redirectTo: 'http://localhost:9000/google-callback',
+      scopes: 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/userinfo.profile'
     },
   })
 

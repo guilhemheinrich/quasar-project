@@ -4,13 +4,24 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    component: () => import('layouts/QanopeeLayout.vue'),
-    children: [{ path: '', component: () => import('pages/SearchPractitionerPage.vue') }],
+    redirect: '/connexion',
+    // component: () => import('layouts/QanopeeLayout.vue'),
+    // children: [{ path: '', component: () => import('pages/SearchPractitionerPage.vue') }],
+  },
+  {
+    path: '/inscription',
+    name: 'inscription',
+    component: () => import('pages/InscriptionPage.vue')
   },
   {
     path: '/connexion',
     name: 'connexion',
     component: () => import('pages/ConnexionPage.vue')
+  },
+  {
+    path: '/update-password',
+    name: 'update-password',
+    component: () => import('pages/UpdatePasswordPage.vue')
   },
   {
     path: '/google',
@@ -33,7 +44,9 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/practitioner',
-    component: () => import('pages/SearchPractitionerPage.vue')
+    name: 'practitioner',
+    component: () => import('layouts/QanopeeLayout.vue'),
+    children: [{ path: '', component: () => import('pages/SearchPractitionerPage.vue') }]
   },
   // Always leave this as last one,
   // but you can also remove it
@@ -42,5 +55,4 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/ErrorNotFound.vue'),
   },
 ];
-
 export default routes;

@@ -2,18 +2,15 @@
   <div class="container">
     <div class="connexion">
       <div id="connexion-container row">
-        <h1>Se connecter</h1>
+        <h1>Créer un compte</h1>
       </div>
       <div class="flex-container row">
-        <h2>Vous n'avez pas de compte ?</h2>
-        <h2 class="underline cursor-pointer" @click="router.push('inscription')">S'inscrire</h2>
+        <h2>Vous avez déja un compte ?</h2>
+        <h2 class="underline cursor-pointer" @click="router.push('connexion')">Se connecter</h2>
       </div>
-
-      <q-form @submit="onSubmit" class="form-container">
+      <q-form @submit="handleSubmit">
         <q-input class="qanopee-text-large" v-model="email" label="Email" hint="Votre email" type="email" lazy-rules
           :rules="emailRules" />
-
-
         <div class="qanopee-text-large">
           <q-input v-model="password" label="Mot de passe" hint="Mot de passe" :type="showPassword ? 'text' : 'password'"
             lazy-rules :rules="[val => val && val.length > 0 || 'Please type something']">
@@ -22,75 +19,59 @@
                 @click="showPassword = !showPassword" />
             </template>
           </q-input>
-          <!-- Lien "Reset password" -->
-          <q-btn @click="redirectToResetPassword" label="Reset password" />
         </div>
-
-
-        <div class="flex-container qanopee-text-large" style="justify-content: center">
-          <q-btn label="Se connecter" type="submit" color="primary" class="qanopee-button" />
+        <div class="qanopee-text-large">
+          <q-input v-model="confirmPassword" label="Confirmer le mot de passe" hint="Mot de passe"
+            :type="showPassword ? 'text' : 'password'" lazy-rules
+            :rules="[val => val && val.length > 0 || 'Please type something']">
+            <template v-slot:append>
+              <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
+                @click="showPassword = !showPassword" />
+            </template>
+          </q-input>
         </div>
+        <q-btn label="S'inscrire" type="submit" color="primary" />
       </q-form>
-
-      <div class="row q-pa-xl">
-        <div>
-          <q-btn label="Se connecter avec Google" type="button" color="primary" class="qanopee-button"
-            @click="loginGoogle()" />
-        </div>
-
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useQuasar } from 'quasar'
+import { ref, computed, Ref } from 'vue';
 import { useAuthStore } from 'src/stores/auth';
-import { computed, ref, Ref } from 'vue'
 import { useRouter } from 'vue-router';
 
-
-// Vous pouvez maintenant utiliser useAuthStore dans votre composant
 const authStore = useAuthStore();
 const router = useRouter();
-const $q = useQuasar()
-
-const email: Ref<string> = ref('')
-const password: Ref<string> = ref('')
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 const showPassword: Ref<boolean> = ref(false)
-
 
 const emailRules = computed(() => [
   (v: string) => !!v || 'Le champ email est requis',
   (v: string) => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(v) || "L'adresse email n'est pas valide",
 ])
 
-const redirectToResetPassword = async () => {
-  if (email.value) return await authStore.sendResetEmail(email.value)
-  console.log('Reset')
-}
+const handleSubmit = () => {
+  if (password.value !== confirmPassword.value) {
+    // Gérer ici le cas où les mots de passe ne correspondent pas
+    console.log('Les mots de passe ne coincide pas')
+    return;
+  }
 
-const onSubmit = async () => {
-  await authStore.loginWithPassword(email.value, password.value);
-  router.push({
-    name: 'practitioner'
-  })
-  return true
-}
+  // Effectuer ici la logique d'inscription, par exemple :
+  authStore.signUpEmail(email.value, password.value);
 
-const loginGoogle = async () => {
-  await authStore.loginWithGoogle()
-}
-
-const onReset = () => {
-  return true
-}
-
+  // Réinitialiser les champs après l'inscription réussie
+  email.value = '';
+  password.value = '';
+  confirmPassword.value = '';
+};
 </script>
 
-<style lang="scss">
-@import url('../css/qanopee.scss');
 
+<style lang="scss">
 .form-container {
   width: 50vw;
 
@@ -143,3 +124,4 @@ h2 {
   align-self: center;
 }
 </style>
+

@@ -85,11 +85,14 @@
 import { ref } from 'vue'
 import { useAuthStore } from 'src/stores/auth';
 import { useRouter } from 'vue-router';
-
 const authStore = useAuthStore();
 const router = useRouter();
 const drawer = ref(false)
 const drawerMini = ref(true);
+
+console.log(authStore.user)
+console.log(authStore.first_name)
+console.log(authStore.session)
 
 // Google OAuth
 const redirectToOAuthPage = () => {
